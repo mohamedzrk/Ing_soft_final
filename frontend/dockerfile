@@ -1,0 +1,14 @@
+FROM python:3.11-slim 
+# image: python:3.11-slim
+WORKDIR /app
+# cambiar el directorio de trabajo a /app
+COPY requirements.txt ./
+# copiar el archivo requirements.txt al contenedor
+RUN pip install --no-cache-dir -r requirements.txt
+# instalar las dependencias de Python
+COPY . .
+# copiar el resto de los archivos de la aplicación al contenedor
+EXPOSE 3000
+# exponer el puerto 3000
+CMD ["python", "app.py"]
+# ejecutar el script app.py

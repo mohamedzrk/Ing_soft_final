@@ -1,0 +1,66 @@
+/* —— Tipografía y contenedor —— */
+body {
+  font-family: Arial, sans-serif;
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 0 15px;
+  color: #333;
+}
+
+/* —— Título —— */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* —— Formulario —— */
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+.search-form label {
+  font-weight: bold;
+}
+.search-form input {
+  padding: 6px;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+}
+.search-form button {
+  width: 120px;
+  padding: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.search-form button:hover {
+  background-color: #0056b3;
+}
+
+/* —— Tabla de resultados —— */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+th, td {
+  padding: 8px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+thead {
+  background-color: #f0f0f0;
+}
+
+/* —— Mensaje “no hay resultados” —— */
+.no-results {
+  text-align: center;
+  padding: 10px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 3px;
+}

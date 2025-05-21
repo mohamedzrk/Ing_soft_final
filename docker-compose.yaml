@@ -1,0 +1,99 @@
+version: "3.8"
+
+services:
+  search-flight:
+    build:
+      context: ./services/search-flight
+    container_name: search_flight
+    ports:
+      - "4000:4000"
+    networks:
+      - backend
+
+  scraper-flight1:
+    build: ./services/scraper-flight1
+    container_name: scraper_flight1
+    ports:
+      - "4002:4002"
+    environment:
+      - RAPIDAPI_KEY=4ffa85abf8msh9bd76ae1e1a52cfp1a295fjsn6129ded4fb7d
+      - RAPIDAPI_HOST=google-flights4.p.rapidapi.com
+    networks:
+      - backend
+
+
+  scraper-flight2:
+    build: ./services/scraper-flight2
+    container_name: scraper_flight2
+    ports:
+      - "4003:4003"
+    environment:
+      - RAPIDAPI_KEY=4ffa85abf8msh9bd76ae1e1a52cfp1a295fjsn6129ded4fb7d
+      - RAPIDAPI_HOST=flights-sky.p.rapidapi.com
+    networks:
+      - backend
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_DB: flight_cache
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  flight-cache:
+    build: ./services/flight-cache
+    container_name: flight-cache
+    ports:
+      - "4004:4004"
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: flight_cache
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  api-gateway:
+    build: ./services/api-gateway
+    container_name: api_gateway
+    ports:
+      - "3001:3001"
+    environment:
+      - CACHE_URL=http://flight-cache:4004
+      - SEARCH_URL=http://search-flight:4000
+      - SCRAPER1_URL=http://scraper-flight1:4002
+      - SCRAPER2_URL=http://scraper-flight2:4003
+    depends_on:
+      - search-flight
+      - scraper-flight1
+      - scraper-flight2
+      - flight-cache
+    networks:
+      - backend
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    networks:
+      - backend
+
+volumes:
+  postgres_data:
+
+networks:
+  backend:
+    driver: bridge

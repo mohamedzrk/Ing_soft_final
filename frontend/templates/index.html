@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comparador de Vuelos</title>
+  <!-- Carga el CSS desde static -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <h1>Comparador de Vuelos</h1>
+
+  <form method="get" class="search-form">
+    <label for="origin">Origen (IATA):</label>
+    <input id="origin" name="origin" type="text" value="{{ origin or '' }}" required>
+
+    <label for="destination">Destino (IATA):</label>
+    <input id="destination" name="destination" type="text" value="{{ destination or '' }}" required>
+
+    <label for="travel_date">Fecha de viaje:</label>
+    <input id="travel_date" name="travel_date" type="date" value="{{ travel_date or '' }}" required>
+
+    <button type="submit">Buscar</button>
+  </form>
+
+  {% if flights %}
+    <h2>Resultados</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Proveedor</th>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Fecha</th>
+          <th>Precio (€)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in flights %}
+        <tr>
+          <td>{{ f.provider }}</td>
+          <td>{{ f.origin }}</td>
+          <td>{{ f.destination }}</td>
+          <td>{{ f.travel_date }}</td>
+          <td>{{ f.price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif origin and destination and travel_date %}
+    <p class="no-results">No se encontraron vuelos.</p>
+  {% endif %}
+</body>
+</html>
