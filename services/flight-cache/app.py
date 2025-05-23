@@ -144,5 +144,18 @@ def get_all():
 def health_check():
     return jsonify({"status": "flight_cache with PostgreSQL running"}), 200
 
+
+@app.route("/clear-cache", methods=["DELETE"])
+def clear_cache():
+    try:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM flights;")
+        conn.commit()
+        return jsonify({"message": "Cache cleared"}), 200
+    except Exception as e:
+        app.logger.error(f"Failed to clear cache: {e}")
+        return jsonify({"error": "Failed to clear cache", "details": str(e)}), 500
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4004)

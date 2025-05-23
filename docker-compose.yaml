@@ -21,6 +21,13 @@ services:
     networks:
       - backend
 
+  flight-service:
+    build: ./services/flight-service
+    container_name: flight_service
+    ports:
+      - "5000:5000"
+    networks:
+      - backend
 
   scraper-flight2:
     build: ./services/scraper-flight2
@@ -69,15 +76,9 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - CACHE_URL=http://flight-cache:4004
-      - SEARCH_URL=http://search-flight:4000
-      - SCRAPER1_URL=http://scraper-flight1:4002
-      - SCRAPER2_URL=http://scraper-flight2:4003
+      - FLIGHT_SERVICE_URL=http://flight-service:5000
     depends_on:
-      - search-flight
-      - scraper-flight1
-      - scraper-flight2
-      - flight-cache
+      - flight-service
     networks:
       - backend
 
