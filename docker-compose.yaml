@@ -1,14 +1,6 @@
 version: "3.8"
 
 services:
-  search-flight:
-    build:
-      context: ./services/search-flight
-    container_name: search_flight
-    ports:
-      - "4000:4000"
-    networks:
-      - backend
 
   scraper-flight1:
     build: ./services/scraper-flight1

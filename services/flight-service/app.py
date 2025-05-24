@@ -7,12 +7,10 @@ from datetime import datetime
 app = Flask(__name__)
 
 CACHE_URL    = os.getenv('CACHE_URL', 'http://flight-cache:4004')
-SEARCH_URL   = os.getenv('SEARCH_URL', 'http://search-flight:4000')
 SCRAPER1_URL = os.getenv('SCRAPER1_URL', 'http://scraper-flight1:4002')
 SCRAPER2_URL = os.getenv('SCRAPER2_URL', 'http://scraper-flight2:4003')
 
 SERVICE_ENDPOINTS = [
-    f"{SEARCH_URL}/flights",
     f"{SCRAPER1_URL}/flights",
     f"{SCRAPER2_URL}/flights"
 ]
