@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 GATEWAY_URL = "http://api-gateway:3001" # URL del API Gateway
 
-# Configura la ruta para la página principal.
+
 @app.route('/', methods=['GET']) 
 def index():   #1) Leer parámetros de la URL (origin, destination, travel_date)
     origin = request.args.get('origin')  

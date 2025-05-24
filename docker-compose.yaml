@@ -8,7 +8,7 @@ services:
     ports:
       - "4002:4002"
     environment:
-      - RAPIDAPI_KEY=4ffa85abf8msh9bd76ae1e1a52cfp1a295fjsn6129ded4fb7d
+      - RAPIDAPI_KEY=358d0116famsh76fa5a39aa827dep123b86jsne7ba2ee7b811
       - RAPIDAPI_HOST=google-flights4.p.rapidapi.com
     networks:
       - backend
